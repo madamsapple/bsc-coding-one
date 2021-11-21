@@ -20,4 +20,4 @@ taskandtime = {
 print(taskandtime)
 
 
-answer = input(" "+ ":" + " " + " ")
+print("{} {} is great".format("ice", "cream"))
