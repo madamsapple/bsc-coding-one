@@ -1,5 +1,6 @@
 import random
 import pygame
+from pygame import display
 import pygame.freetype
 
 taskandtime = {
@@ -19,8 +20,8 @@ taskandtime = {
 
 }
 
-
-pygame.display.set_mode((650, 500))
+pygame.init()
+screen = pygame.display.set_mode((650, 500))
 pygame.display.set_caption("Remember the Time...")
 window = True
 
@@ -34,8 +35,15 @@ while window:
             #game stops running
             window = False
 
-    gamefont = pygame.font.SysFont("LIQUIDISMPART2.ttf", 30)
+    
 
-    #4 args - display surface, location on surface, text to print as string, (l,b,h) of text  
-    gamefont.render_to(screen, (325, 250), "Remember the Time...", (0,0,0))
+    #gamefont is an object which stores the font and text size
+    gamefont = pygame.font.Font("LIQUIDISMPART2.ttf", 30)
+
+    #render func shows text onscreen: 4 args - display surface, location on surface, text to print as string, (l,b,h) of text  
+    text = gamefont.render("Remember the Time...", False, (255, 0, 0))
+    
+    screen.blit(text, (325, 250))
+
+    pygame.display.update()
 
