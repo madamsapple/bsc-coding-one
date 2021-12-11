@@ -1,4 +1,6 @@
 import random
+import pygame
+import pygame.freetype
 
 taskandtime = {
     "wake up" : str(random.randint(6,7)) + ":" + str(random.randint(0, 3)) + str(random.randint(0, 9)) + " AM",
@@ -17,7 +19,23 @@ taskandtime = {
 
 }
 
-print(taskandtime)
 
+pygame.display.set_mode((650, 500))
+pygame.display.set_caption("Remember the Time...")
+window = True
 
-print("{} {} is great".format("ice", "cream"))
+while window:
+    #looping through all events happening in the game
+    for event in pygame.event.get():
+
+        #if event is a quit event (triggered by clicking the x button)
+        if event.type == pygame.QUIT:
+
+            #game stops running
+            window = False
+
+    gamefont = pygame.font.SysFont("LIQUIDISMPART2.ttf", 30)
+
+    #4 args - display surface, location on surface, text to print as string, (l,b,h) of text  
+    gamefont.render_to(screen, (325, 250), "Remember the Time...", (0,0,0))
+
