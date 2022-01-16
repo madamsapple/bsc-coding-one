@@ -297,7 +297,7 @@ class gamestates():
             if game_event.type == pygame.KEYDOWN:
                 if game_event.key == K_BACKSPACE:
                     if len(input) > 0:
-                        input = input[:-1]     
+                        input = input[:-1]
                 else:
                     input += game_event.unicode
 
