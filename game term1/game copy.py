@@ -32,16 +32,9 @@ taskandtime = {
     9 : "lights out - " + ("8:" + str(random.randint(30,59))) or ("9:" + (("0" + str(random.randint(0,9))) or (str(random.randint(10,30))))) + " PM"
 }
 
-#wrong ans for wake up time
-falses_0 = {
-            "option_b" : str(random.randint(6,7)) + ":" + str(random.randint(0, 3)) + str(random.randint(0, 9)) + " AM",
-            "option_c" : "7" + ":" + str(random.randint(0, 3)) + str(random.randint(0, 9)) + " AM",
-            "option_d" : "6" + ":" + str(random.randint(0, 5)) + str(random.randint(0, 9)) + " AM"
-}
+answers = [ ["", ""], ["", ""], ["", ""] ]
 
-player_1 = 0
-player_2 = 0
-answers = []
+
 class Button:
 	def __init__(self,text,width,height,pos,elevation):
 		#Core attributes 
@@ -90,12 +83,11 @@ class Button:
 			self.dynamic_elecation = self.elevation
 			self.top_color = lime        
 
-
 #clearcode pygame gamestate code
 class gamestates():
     
     def __init__(self):
-        self.state = 'q1'
+        self.state = 'menu'
 
     def menu(self):
 
@@ -259,6 +251,7 @@ class gamestates():
 
     def inmates(self):
 
+        #timer always declared at the moment of a key press!!
         global timelol
         x = pygame.transform.scale(bricks, (650,500))
         #rect2 = button.get_rect()
@@ -332,8 +325,6 @@ class gamestates():
         
         if pygame.key.get_pressed()[pygame.K_y]:
             self.state = "q1"
-            if self.state == "q1":
-                next = True
            
         elif pygame.key.get_pressed()[pygame.K_n]:
             self.state = "bye"
@@ -357,9 +348,11 @@ class gamestates():
 
         answer = taskandtime[0]
         answer = answer[10:] 
-        option_b = falses_0.get("option_b")
-        option_c = falses_0.get("option_c")
-        option_d = falses_0.get("option_d")
+        option_b = str(random.randint(6,7)) + ":" + str(random.randint(0, 3)) + str(random.randint(0, 9)) + " AM"
+        option_c = "7" + ":" + str(random.randint(0, 3)) + str(random.randint(0, 9)) + " AM"
+        option_d = "6" + ":" + str(random.randint(0, 5)) + str(random.randint(0, 9)) + " AM"
+
+        print(option_b, option_c, option_d)
         
         #simple display of all options
         pygame.draw.rect(screen, orange, (160,123,130,45))
@@ -389,22 +382,20 @@ class gamestates():
         inmate_1 = carbontype.render("Inmate 1: ", False, black)
         screen.blit(inmate_1, (90, 280))
         inmate_2 = carbontype.render("Inmate 2: ", False, black)
-        screen.blit(inmate_2, (430, 280))
+        screen.blit(inmate_2, (420, 280))
 
         #button class: Button(text, width, height, pos, elevation)
-        player1_a = Button("a",75,40,(80,340),3)
-        player1_b = Button("b",75,40,(170,340),3)
-        player1_c = Button("c",75,40,(80,400),3)
-        player1_d = Button("d",75,40,(170,400),3)
+        player1_a = Button("a",75,40,(80,325),3)
+        player1_b = Button("b",75,40,(170,325),3)
+        player1_c = Button("c",75,40,(80,385),3)
+        player1_d = Button("d",75,40,(170,385),3)
 
-        player2_a = Button("a",75,40,(420,340),3)
-        player2_b = Button("b",75,40,(510,340),3)
-        player2_c = Button("c",75,40,(420,400),3)
-        player2_d = Button("d",75,40,(510,400),3)
+        player2_a = Button("a",75,40,(410,325),3)
+        player2_b = Button("b",75,40,(500,325),3)
+        player2_c = Button("c",75,40,(410,385),3)
+        player2_d = Button("d",75,40,(500,385),3)
 
-        opensans = pygame.font.Font("OpenSans-Italic.ttf",17)
-        note = opensans.render("Starting with inmate 1, click once on the button for your final answer.", True, red)
-        screen.blit(note, (10, 470))
+        
         x = True
         while x:
             for event in pygame.event.get():
@@ -415,8 +406,7 @@ class gamestates():
                     sys.exit()
                 if pygame.key.get_pressed()[pygame.K_RIGHT]:
                     x = False
-                    print("yes")
-                    self.state = "butt"
+                    self.state = "q2"
                 
 	    
             player1_a.draw()
@@ -429,16 +419,49 @@ class gamestates():
             player2_c.draw()
             player2_d.draw()
 
-            #if button_a.pressed:
-            #    print("a was pressed")
-            #    answers
+            if player1_a.pressed:
+                #answer to the first question by the first player
+                answers[0][0] = True
+            if player1_b.pressed:
+                #answer to the first question by the first player
+                answers[0][0] = False
+            if player1_c.pressed:
+                #answer to the first question by the first player
+                answers[0][0] = False
+            if player1_d.pressed:
+                #answer to the first question by the first player
+                answers[0][0] = False
+
+            if player2_a.pressed:
+                #answer to the first question by the first player
+                answers[0][1] = True
+            if player2_b.pressed:
+                #answer to the first question by the first player
+                answers[0][1] = False
+            if player2_c.pressed:
+                #answer to the first question by the first player
+                answers[0][1] = False
+            if player2_d.pressed:
+                #answer to the first question by the first player
+                answers[0][1] = False
             
+            if answers[0][0] != "" and answers[0][1] != "":
+                carbontype = pygame.font.Font("carbontype.ttf", 21)
+                locked = carbontype.render("Your answers are locked!", False, red)
+                screen.blit(locked, (145, 440))
+
+                next = carbontype.render("Press", False, black)
+                screen.blit(next, (510, 455))
+                arrows = pygame.font.Font("Arrows ADF.ttf", 40)
+                rightkey = arrows.render("k", False, black)
+                screen.blit(rightkey, (590, 450))
+
             
             pygame.display.update()
 
-
-        #box_1 = pygame.Rect((100,300),(200,100))
+        
         """
+        #box_1 = pygame.Rect((100,300),(200,100))
 
         #answer a
         #box_a = pygame.draw.rect(screen, orange, (130,213,130,45))
@@ -494,8 +517,386 @@ class gamestates():
         pygame.display.flip()
         """
 
-    def butt(self):
+    def q2(self):
+
+        x = pygame.transform.scale(bricks, (650,500))
+        screen.blit(x, (0,0))
+        #"rollcall for work - 9:" + str(random.randint(45, 50)) + " AM"
+        carbontype = pygame.font.Font("carbontype.ttf", 23)
+        
+        scr2 = pygame.draw.rect(screen, white, (0,260,width,530))
+        
+        #question
+        q1 = carbontype.render("At what time did you go to work?", False, white)
+        screen.blit(q1, (80, 70))
+
+        answer = taskandtime[2]
+        answer = answer[20:]
+        
+        option_a = "9:" + str(random.randint(20, 30)) + " AM"
+        option_b = str(random.randint(8, 9)) + ":" + str(random.randint(31, 49)) + " AM"
+        option_d = "8:" + str(random.randint(10, 19)) + " AM"
+        
+        #simple display of all options
+        pygame.draw.rect(screen, orange, (160,123,130,45))
+        a = carbontype.render(option_a, False, white)
+        screen.blit(a, (170, 133))
+        letter_a = carbontype.render("a.", False, white)
+        screen.blit(letter_a, (130,133))
+        
+        pygame.draw.rect(screen, orange, (360,123,130,45))
+        b = carbontype.render(option_b, False, white)
+        screen.blit(b, (370, 133))
+        letter_b = carbontype.render("b.", False, white)
+        screen.blit(letter_b, (330,133))
+
+        pygame.draw.rect(screen, orange, (160,193,130,45))
+        c = carbontype.render(answer, False, white)
+        screen.blit(c, (170, 203))
+        letter_c = carbontype.render("c.", False, white)
+        screen.blit(letter_c, (130,203))
+
+        pygame.draw.rect(screen, orange, (360,193,130,45))
+        d = carbontype.render(option_d, False, white)
+        screen.blit(d, (370, 203))
+        letter_d = carbontype.render("d.", False, white)
+        screen.blit(letter_d, (330,203))
+
+        inmate_1 = carbontype.render("Inmate 1: ", False, black)
+        screen.blit(inmate_1, (90, 280))
+        inmate_2 = carbontype.render("Inmate 2: ", False, black)
+        screen.blit(inmate_2, (420, 280))
+
+        #button class: Button(text, width, height, pos, elevation)
+        player1_a = Button("a",75,40,(80,325),3)
+        player1_b = Button("b",75,40,(170,325),3)
+        player1_c = Button("c",75,40,(80,385),3)
+        player1_d = Button("d",75,40,(170,385),3)
+
+        player2_a = Button("a",75,40,(410,325),3)
+        player2_b = Button("b",75,40,(500,325),3)
+        player2_c = Button("c",75,40,(410,385),3)
+        player2_d = Button("d",75,40,(500,385),3)
+
+        x = True
+        while x:
+            for event in pygame.event.get():
+                #if event.type == pygame.QUIT:
+                #   x = False
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                if pygame.key.get_pressed()[pygame.K_3]:
+                    x = False
+                    self.state = "q3"
+	    
+            player1_a.draw()
+            player1_b.draw()
+            player1_c.draw()
+            player1_d.draw()
+
+            player2_a.draw()
+            player2_b.draw()
+            player2_c.draw()
+            player2_d.draw()
+
+            if player1_a.pressed:
+                #answer to the first question by the first player
+                answers[1][0] = False
+            if player1_b.pressed:
+                #answer to the first question by the first player
+                answers[1][0] = False
+            if player1_c.pressed:
+                #answer to the first question by the first player
+                answers[1][0] = True
+            if player1_d.pressed:
+                #answer to the first question by the first player
+                answers[1][0] = False
+
+            if player2_a.pressed:
+                #answer to the first question by the first player
+                answers[1][1] = False
+            if player2_b.pressed:
+                #answer to the first question by the first player
+                answers[1][1] = False
+            if player2_c.pressed:
+                #answer to the first question by the first player
+                answers[1][1] = True
+            if player2_d.pressed:
+                #answer to the first question by the first player
+                answers[1][1] = False
+            
+            if answers[1][0] != "" and answers[1][1] != "":
+                carbontype = pygame.font.Font("carbontype.ttf", 21)
+                locked = carbontype.render("Your answers are locked!", False, red)
+                screen.blit(locked, (145, 440))
+
+                next = carbontype.render("Press", False, black)
+                screen.blit(next, (510, 455))
+                arrows = pygame.font.Font("Arrows ADF.ttf", 40)
+                rightkey = arrows.render("k", False, black)
+                screen.blit(rightkey, (590, 450))
+            
+            pygame.display.update()
+
+    def q3(self):
+
+        x = pygame.transform.scale(bricks, (650,500))
+        screen.blit(x, (0,0))
+        
+        carbontype = pygame.font.Font("carbontype.ttf", 23)
+        
+        scr2 = pygame.draw.rect(screen, white, (0,260,width,530))
+        
+        #question
+        q1 = carbontype.render("When did you attend phonecalls?", False, white)
+        screen.blit(q1, (80, 70))
+
+        answer = taskandtime[5]
+        answer = answer[13:]
+        option_b = "2:" + str(random.randint(45, 50)) + " PM"
+        option_c = "2:" + str(random.randint(13, 29)) + " PM"
+        option_a = "2:" + str(random.randint(30, 34)) + " PM"
+        
+        #simple display of all options
+        pygame.draw.rect(screen, orange, (160,123,130,45))
+        a = carbontype.render(option_a, False, white)
+        screen.blit(a, (170, 133))
+        letter_a = carbontype.render("a.", False, white)
+        screen.blit(letter_a, (130,133))
+        
+        pygame.draw.rect(screen, orange, (360,123,130,45))
+        b = carbontype.render(option_b, False, white)
+        screen.blit(b, (370, 133))
+        letter_b = carbontype.render("b.", False, white)
+        screen.blit(letter_b, (330,133))
+
+        pygame.draw.rect(screen, orange, (160,193,130,45))
+        c = carbontype.render(option_c, False, white)
+        screen.blit(c, (170, 203))
+        letter_c = carbontype.render("c.", False, white)
+        screen.blit(letter_c, (130,203))
+
+        pygame.draw.rect(screen, orange, (360,193,130,45))
+        d = carbontype.render(answer, False, white)
+        screen.blit(d, (370, 203))
+        letter_d = carbontype.render("d.", False, white)
+        screen.blit(letter_d, (330,203))
+
+        inmate_1 = carbontype.render("Inmate 1: ", False, black)
+        screen.blit(inmate_1, (90, 280))
+        inmate_2 = carbontype.render("Inmate 2: ", False, black)
+        screen.blit(inmate_2, (420, 280))
+
+        #button class: Button(text, width, height, pos, elevation)
+        player1_a = Button("a",75,40,(80,325),3)
+        player1_b = Button("b",75,40,(170,325),3)
+        player1_c = Button("c",75,40,(80,385),3)
+        player1_d = Button("d",75,40,(170,385),3)
+
+        player2_a = Button("a",75,40,(410,325),3)
+        player2_b = Button("b",75,40,(500,325),3)
+        player2_c = Button("c",75,40,(410,385),3)
+        player2_d = Button("d",75,40,(500,385),3)
+
+        
+        x = True
+        while x:
+            for event in pygame.event.get():
+                #if event.type == pygame.QUIT:
+                #   x = False
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                if pygame.key.get_pressed()[pygame.K_RIGHT]:
+                    x = False
+                    self.state = "decision"
+                    global mer
+                    mer = pygame.time.get_ticks()
+                
+	    
+            player1_a.draw()
+            player1_b.draw()
+            player1_c.draw()
+            player1_d.draw()
+
+            player2_a.draw()
+            player2_b.draw()
+            player2_c.draw()
+            player2_d.draw()
+
+            if player1_a.pressed:
+                #answer to the first question by the first player
+                answers[2][0] = False
+            if player1_b.pressed:
+                #answer to the first question by the first player
+                answers[2][0] = False
+            if player1_c.pressed:
+                #answer to the first question by the first player
+                answers[2][0] = False
+            if player1_d.pressed:
+                #answer to the first question by the first player
+                answers[2][0] = True
+
+            if player2_a.pressed:
+                #answer to the first question by the first player
+                answers[2][1] = False
+            if player2_b.pressed:
+                #answer to the first question by the first player
+                answers[2][1] = False
+            if player2_c.pressed:
+                #answer to the first question by the first player
+                answers[2][1] = False
+            if player2_d.pressed:
+                #answer to the first question by the first player
+                answers[2][1] = True
+            
+            if answers[2][0] != "" and answers[2][1] != "":
+                carbontype = pygame.font.Font("carbontype.ttf", 21)
+                locked = carbontype.render("Your answers are locked!", False, red)
+                screen.blit(locked, (145, 440))
+
+                next = carbontype.render("Press", False, black)
+                screen.blit(next, (510, 455))
+                arrows = pygame.font.Font("Arrows ADF.ttf", 40)
+                rightkey = arrows.render("k", False, black)
+                screen.blit(rightkey, (590, 450))
+            
+            pygame.display.update()
+
+    def decision(self):
         screen.fill(black)
+
+        """
+        print("current_ time: " + str(current_time))
+        #mer is declared in the prev frame, during the event of switching with keys!
+        print("mer time: " + str(mer))
+        """
+
+        if ((current_time - mer)/1000) >= 1.000:
+            txt1 = carbontype.render("Hello.", False, white)
+            screen.blit(txt1, (20, 80))
+
+        if ((current_time - mer)/1000) >= 2.500:
+            txt2 = carbontype.render("The interrogations are being surveyed", False, white)
+            screen.blit(txt2, (20, 130))
+                
+        for i in range(1, 6, 1):
+            if ((current_time - mer)/1000) >= (2.500 + i):
+                txt = carbontype.render(".", False, white)
+                screen.blit(txt, (560 + (10*i), 128))
+
+        if ((current_time - mer)/1000) >= 7.000:
+            txt3 = carbontype.render("Did any inmate lie?", False, white)
+            screen.blit(txt3, (20, 240))
+
+        if ((current_time - mer)/1000) >= 9.000:
+            txt4 = carbontype.render("Well,", False, white)
+            screen.blit(txt4, (20, 270))
+        
+        if ((current_time - mer)/1000) >= 10.500:
+            txt5 = carbontype.render("the verdict is here.", False, white)
+            screen.blit(txt5, (190, 330))
+            
+        if ((current_time - mer)/1000) >= 12.000:
+            self.state = "endgame"
+            #byebye! 'twas lovely making this game
+
+        pygame.display.update()
+
+        player1_score = 0
+        player2_score = 0
+        global tie
+        tie = False
+        global no_winner
+        no_winner = False
+        global winner
+        winner = 0
+        global loser
+        loser = 0
+        
+        #calculating scores of both players
+        for x in range(0,3):
+            if answers[x][0] == True:
+                player1_score += 1
+        
+        for x in range(0,3):
+            if answers[x][1] == True:
+                player2_score += 1
+
+        #deciding win/loss/tie
+        if ((player1_score == 3) and (player2_score == 3)):
+            tie = True
+        elif ((player1_score == 3) or (player2_score == 3)):
+            if player1_score == 3:
+                winner = "Inmate 1"
+                loser = "Inmate 2"
+            else:
+                winner = "Inmate 2"
+                loser = "Inmate 1"
+        else:
+            no_winner = True
+
+        """
+        print("answers: ", answers)
+        print("no_winner: " + str(no_winner))
+        print("tie: " + str(tie))
+        print("winner: " + str(winner))
+        print("loser: " + str(loser))
+        """
+
+    def endgame(self):
+
+        """ """
+        #if one player wins
+        if winner != 0:
+
+            main1942 = pygame.font.Font("1942.ttf", 41, bold = True)
+            #x = pygame.transform.scale(bricks, (650,500))
+            #screen.blit(x, (0,0))
+            screen.fill(black)
+        
+            txt = main1942.render("You are", False, red)
+            screen.blit(txt, (220, 135))
+            txt3 = main1942.render(loser, False, vermillion)
+            screen.blit(txt3, (220, 255))
+            pygame.display.update()
+
+            txt2 = main1942.render("sentenced to death:", False, red)
+            screen.blit(txt2, (70, 190))
+
+            txt4 = main1942.render(("{} wins.".format(winner)), False, red)
+            screen.blit(txt4, (150, 400))
+
+        #if both players win
+        elif tie == True:
+            main1942 = pygame.font.Font("1942.ttf", 39, bold = True)
+            #x = pygame.transform.scale(bricks, (650,500))
+            #screen.blit(x, (0,0))
+            screen.fill(black)
+            
+            txt2 = main1942.render("You both win!", False, red)
+            screen.blit(txt2, (170, 250))
+            
+            pygame.display.update()
+            txt = main1942.render("No one got caught.", False, red)
+            screen.blit(txt, (115, 190))
+
+        #if both lose
+        elif no_winner == True:
+            main1942 = pygame.font.Font("1942.ttf", 39, bold = True)
+            #x = pygame.transform.scale(bricks, (650,500))
+            #screen.blit(x, (0,0))
+            screen.fill(black)
+            
+            txt = main1942.render("You are BOTH suspected of", False, red)
+            screen.blit(txt, (15, 170))
+            txt3 = main1942.render("murder", False, red)
+            screen.blit(txt3, (245, 215))
+            
+            pygame.display.update()
+            txt2 = main1942.render("No one wins.", False, red)
+            screen.blit(txt2, (180, 285))
         
         pygame.display.update()
 
@@ -522,9 +923,15 @@ class gamestates():
             self.bye()
         if self.state == "q1":
             self.q1()
-        if self.state == "butt":
-            self.butt()
-            
+        if self.state == "q2":
+            self.q2()
+        if self.state == "q3":
+            self.q3()
+        if self.state == "decision":
+            self.decision()
+        if self.state == "endgame":
+            self.endgame()
+
                            
 lime = (253,230,126)
 vermillion = (230,53,37)
