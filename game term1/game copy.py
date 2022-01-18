@@ -1,10 +1,9 @@
 import random
-import pygame
+import pygame,sys
 from pygame import Surface, display
 from pygame import surface
-from pygame.constants import K_BACKSPACE, MOUSEBUTTONDOWN
+#from pygame.constants import K_BACKSPACE, MOUSEBUTTONDOWN
 import pygame.freetype
-import sys
 #from button import Button
 
 #put arrow for forward 
@@ -14,6 +13,7 @@ import sys
 #reduce font weight
 #clearcode pygame gamestate code 
 #clearcode pygame timer code
+#relative path
 
 #answer dict
 taskandtime = {
@@ -39,6 +39,7 @@ falses_0 = {
             "option_d" : "6" + ":" + str(random.randint(0, 5)) + str(random.randint(0, 9)) + " AM"
 }
 
+next = False
 class Button:
 	def __init__(self,text,width,height,pos,elevation):
 		#Core attributes 
@@ -326,11 +327,15 @@ class gamestates():
             screen.blit(txt8, (290, 430))
         pygame.display.update()
 
+        
         if pygame.key.get_pressed()[pygame.K_y]:
             self.state = "q1"
+            if self.state == "q1":
+                next = True
            
         elif pygame.key.get_pressed()[pygame.K_n]:
             self.state = "bye"
+
             
     def bye(self):
         screen.fill(black)
@@ -350,51 +355,78 @@ class gamestates():
         screen.blit(q1, (100, 150))
 
         answer = taskandtime[0]
-        answer = answer[10:]
-        #print(answer)
-        #print("type: " + str(type(answer)))
+        answer = answer[10:]        
         
-        #rendering options and their boxes onto screen
-        option_a = carbontype.render(answer, False, white)
-        option_b = carbontype.render(falses_0.get("option_b"), False, white)
-        option_c = carbontype.render(falses_0.get("option_c"), False, white)
-        option_d = carbontype.render(falses_0.get("option_d"), False, white)
+        #option_a = carbontype.render(answer, False, white)
+        option_b = falses_0.get("option_b")
+        option_c = falses_0.get("option_c")
+        option_d = falses_0.get("option_d")
 
         
         #answer a
-        box_a = pygame.draw.rect(screen, orange, (130,213,130,45))
-        screen.blit(option_a, (140, 223))
+        #box_a = pygame.draw.rect(screen, orange, (130,213,130,45))
+        #screen.blit(option_a, (140, 223))
 
+        
         #answer b
-        box_b = pygame.draw.rect(screen, orange, (330,213,130,45))
-        screen.blit(option_b, (340, 223))
+        #(x,y,width,height)
+        #box_b = pygame.draw.rect(screen, orange, (330,213,130,45))
+        #screen.blit(option_b, (340, 223))
 
-        box_c = pygame.draw.rect(screen, orange, (130,283,130,45))
-        screen.blit(option_c, (140, 293))
+        #box_c = pygame.draw.rect(screen, orange, (130,283,130,45))
+        #screen.blit(option_c, (140, 293))
 
-        box_d = pygame.draw.rect(screen, orange, (330,283,130,45))
-        screen.blit(option_d, (340, 293))
+        #box_d = pygame.draw.rect(screen, orange, (330,283,130,45))
+        #screen.blit(option_d, (340, 293))
 
         
         inmate_1 = carbontype.render("Inmate 1: ", False, black)
         screen.blit(inmate_1, (20, 410))
         input_1 = pygame.draw.rect(screen, black, (170,403,130,45))
-        user_answer = user_text[1:]
-        text_surface = carbontype.render(user_answer, False, orange)
-        screen.blit(text_surface, (190, 410))
-        
 
         inmate_2 = carbontype.render("Inmate 2: ", False, black)
         screen.blit(inmate_2, (350, 410))
         input_2 = pygame.draw.rect(screen, black, (500,403,130,45))
 
-        #if pygame.key.get_pressed()[pygame.K_KP_ENTER]:
-         #   act = False
-        if pygame.key.get_pressed()[pygame.K_RIGHT]:
-            self.state = "butt"
-        pygame.display.update()
+        
 
+        #button class: Button(text, width, height, pos, elevation)
+        button_a = Button(answer,130,45,(130,213),3)
+
+        button_b = Button(option_b,130,45,(330,213),3)
+        button_c = Button(option_c,130,45,(130,283),3)
+        button_d = Button(option_d,130,45,(330,213),3)
+
+
+        x = True
+        while x:
+            for event in pygame.event.get():
+                #if event.type == pygame.QUIT:
+                #   x = False
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                if pygame.key.get_pressed()[pygame.K_RIGHT]:
+                    x = False
+                    print("yes")
+                    self.state = "butt"
+	    
+            button_a.draw()
+            button_b.draw()
+            button_c.draw()
+            button_d.draw()
+            
+            pygame.display.update()
+
+
+        #box_1 = pygame.Rect((100,300),(200,100))
         """
+
+        input_1 = pygame.draw.rect(screen, black, (170,403,130,45))
+        user_answer = user_text[1:]
+        text_surface = carbontype.render(user_answer, False, orange)
+        screen.blit(text_surface, (190, 410))
+
         if pygame.key.get_pressed()[pygame.K_a]:
             pygame.draw.rect(screen, red, (130,213,130,45), 3)           
         elif pygame.key.get_pressed()[pygame.K_b]:
@@ -404,10 +436,6 @@ class gamestates():
         elif pygame.key.get_pressed()[pygame.K_d]:
             pygame.draw.rect(screen, red, (330,313,130,45), 3)
 
-        """
-
-        #box_1 = pygame.Rect((100,300),(200,100))
-        """
         for game_event in pygame.event.get():
             if game_event.type == pygame.MOUSEBUTTONDOWN:
 
@@ -436,18 +464,8 @@ class gamestates():
 
     def butt(self):
         screen.fill(black)
-        #buttscreen = True
-        button_1 = Button('Click me',200,40,(20,250),3)
-        while True:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
-
-	    #screen.fill('#DCDDD8')
-            button_1.draw()
-
-            pygame.display.update()
+        
+        pygame.display.update()
 
     def state_manager(self):
         if self.state == "menu":
@@ -474,13 +492,13 @@ class gamestates():
             self.q1()
         if self.state == "butt":
             self.butt()
-            buttscreen = True
+            
                            
 lime = (253,230,126)
 vermillion = (230,53,37)
 chrome = 209, 150, 0
 black = (0,0,0)
-buttscreen = False
+
 
 #initializes all modules
 pygame.init()
@@ -512,15 +530,9 @@ height = 500
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Remember the Time...")
 
-#global user_text
-user_text = ""
-
-act = False
-
 
 window = True
 while window:
-
 
     #looping through all events happening in the game
     for event in pygame.event.get():
@@ -530,121 +542,9 @@ while window:
             #game stops running
             window = False
             #pygame.quit()
-            #sys.exit()
-        
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_y:
-                act = True
-            elif event.key == pygame.K_KP_ENTER:
-                act = False
-     
-        if act == True:
-            if event.type == pygame.KEYDOWN:
-
-                if event.key == pygame.K_BACKSPACE:
-                    user_text = user_text[:-1]
-                
-                else:
-                    user_text += event.unicode
-
-    
+            #sys.exit()  
 
     current_time = pygame.time.get_ticks()
 
     gamestate.state_manager()
-           
-    """ """
-    clock.tick(60)        
-     
-
-"""
-
-    #dict storing gamestates
-        dict = { 1: "Menu", 2: "frame1", 3: "frame2", 4: "frame3" }
-
-        #GAME STATES
-        Menu = True
-        Frame1 = False
-        Frame2 = False
-        Frame3 = False
-        Frame4 = False
-        Frame5 = False
-        Frame6 = False
-
-    if Frame1:
-
-        if event.type == pygame.USEREVENT:
-            counter += 1
-
-        screen.fill(black)
-
-        bg = pygame.transform.scale(bricks, (313,190))
-        #rect3 = bricks.get_rect(topleft = (0,0))
-        screen.blit(bg, (165, 160))
-
-        f1txt1 = carbontype.render("Once upon a time...", False, white)
-        screen.blit(f1txt1, (185, 130))
-
-        #delayed printing of text using "counter" timer
-        if counter >= 23:
-            f1txt2 = carbontype.render("there were two goons", False, white)
-            screen.blit(f1txt2, (171, 355))
-
-        #counter needs to be (>=) not just (==) or text will only flash for that second/moment
-        if counter >= 34.5:
-            f1txt3 = carbontype.render("locked in a prison.", False, white)
-            screen.blit(f1txt3, (184, 380))
-        
-        if counter >= 35.5:
-            f1txt4 = carbontype.render("Press", False, white)
-            screen.blit(f1txt4, (510, 457))
-            arrows = pygame.font.Font("Arrows ADF.ttf", 40)
-            rightkey = arrows.render("k", False, white)
-            screen.blit(rightkey, (590, 450))
-
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RIGHT:
-                    Frame1 = False
-                    Frame2 = True
-                    x = counter
-
-
-    if Frame2:
-        if event.type == pygame.USEREVENT:
-            counter += 1
-
-        setup = True
-        keypress = False
-
-        if setup:
-            screen.fill(black)
-            f2txt1 = carbontype.render("Prison life was meek.", False, white)
-            screen.blit(f2txt1, (170, 250))
-            print(counter)
-            if counter == x + 15:
-                keypress = True
-
-        
-        #figured out feature to move between frames during storyline!!
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_LEFT:
-                Frame1 = True
-                Frame2 = False
-
-        if keypress:
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RIGHT:
-                    Frame2 = False
-                    Frame3 = True
-              
-
-    if Frame3:
-
-        screen.fill(black)
-
-        f3txt1 = carbontype.render("But these goons,", False, white)
-        screen.blit(f3txt1, (180, 250))
-
-        f3txt2 = carbontype.render("they still had wounds to heal.", False, white)
-        screen.blit(f3txt2, (150, 290))
-"""
+    clock.tick(60)
