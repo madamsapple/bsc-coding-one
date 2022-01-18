@@ -39,7 +39,9 @@ falses_0 = {
             "option_d" : "6" + ":" + str(random.randint(0, 5)) + str(random.randint(0, 9)) + " AM"
 }
 
-next = False
+player_1 = 0
+player_2 = 0
+answers = []
 class Button:
 	def __init__(self,text,width,height,pos,elevation):
 		#Core attributes 
@@ -93,7 +95,7 @@ class Button:
 class gamestates():
     
     def __init__(self):
-        self.state = 'menu'
+        self.state = 'q1'
 
     def menu(self):
 
@@ -335,8 +337,7 @@ class gamestates():
            
         elif pygame.key.get_pressed()[pygame.K_n]:
             self.state = "bye"
-
-            
+      
     def bye(self):
         screen.fill(black)
         txt = carbontype.render("byebye.", True, white)
@@ -348,56 +349,62 @@ class gamestates():
         carbontype = pygame.font.Font("carbontype.ttf", 23)
         x = pygame.transform.scale(bricks, (650,500))
         screen.blit(x, (0,0))
-        scr2 = pygame.draw.rect(screen, white, (0,370,width,230))
+        scr2 = pygame.draw.rect(screen, white, (0,250,width,530))
         
         #question
         q1 = carbontype.render("When did you wake up?", False, white)
-        screen.blit(q1, (100, 150))
+        screen.blit(q1, (150, 80))
 
         answer = taskandtime[0]
-        answer = answer[10:]        
-        
-        #option_a = carbontype.render(answer, False, white)
+        answer = answer[10:] 
         option_b = falses_0.get("option_b")
         option_c = falses_0.get("option_c")
         option_d = falses_0.get("option_d")
-
         
-        #answer a
-        #box_a = pygame.draw.rect(screen, orange, (130,213,130,45))
-        #screen.blit(option_a, (140, 223))
-
+        #simple display of all options
+        pygame.draw.rect(screen, orange, (160,123,130,45))
+        a = carbontype.render(answer, False, white)
+        screen.blit(a, (170, 133))
+        letter_a = carbontype.render("a.", False, white)
+        screen.blit(letter_a, (130,133))
         
-        #answer b
-        #(x,y,width,height)
-        #box_b = pygame.draw.rect(screen, orange, (330,213,130,45))
-        #screen.blit(option_b, (340, 223))
+        pygame.draw.rect(screen, orange, (360,123,130,45))
+        b = carbontype.render(option_b, False, white)
+        screen.blit(b, (370, 133))
+        letter_b = carbontype.render("b.", False, white)
+        screen.blit(letter_b, (330,133))
 
-        #box_c = pygame.draw.rect(screen, orange, (130,283,130,45))
-        #screen.blit(option_c, (140, 293))
+        pygame.draw.rect(screen, orange, (160,193,130,45))
+        c = carbontype.render(option_c, False, white)
+        screen.blit(c, (170, 203))
+        letter_c = carbontype.render("c.", False, white)
+        screen.blit(letter_c, (130,203))
 
-        #box_d = pygame.draw.rect(screen, orange, (330,283,130,45))
-        #screen.blit(option_d, (340, 293))
+        pygame.draw.rect(screen, orange, (360,193,130,45))
+        d = carbontype.render(option_d, False, white)
+        screen.blit(d, (370, 203))
+        letter_d = carbontype.render("d.", False, white)
+        screen.blit(letter_d, (330,203))
 
-        
         inmate_1 = carbontype.render("Inmate 1: ", False, black)
-        screen.blit(inmate_1, (20, 410))
-        input_1 = pygame.draw.rect(screen, black, (170,403,130,45))
-
+        screen.blit(inmate_1, (90, 280))
         inmate_2 = carbontype.render("Inmate 2: ", False, black)
-        screen.blit(inmate_2, (350, 410))
-        input_2 = pygame.draw.rect(screen, black, (500,403,130,45))
-
-        
+        screen.blit(inmate_2, (430, 280))
 
         #button class: Button(text, width, height, pos, elevation)
-        button_a = Button(answer,130,45,(130,213),3)
+        player1_a = Button("a",75,40,(80,340),3)
+        player1_b = Button("b",75,40,(170,340),3)
+        player1_c = Button("c",75,40,(80,400),3)
+        player1_d = Button("d",75,40,(170,400),3)
 
-        button_b = Button(option_b,130,45,(330,213),3)
-        button_c = Button(option_c,130,45,(130,283),3)
-        button_d = Button(option_d,130,45,(330,213),3)
+        player2_a = Button("a",75,40,(420,340),3)
+        player2_b = Button("b",75,40,(510,340),3)
+        player2_c = Button("c",75,40,(420,400),3)
+        player2_d = Button("d",75,40,(510,400),3)
 
-
+        opensans = pygame.font.Font("OpenSans-Italic.ttf",17)
+        note = opensans.render("Starting with inmate 1, click once on the button for your final answer.", True, red)
+        screen.blit(note, (10, 470))
         x = True
         while x:
             for event in pygame.event.get():
@@ -410,11 +417,22 @@ class gamestates():
                     x = False
                     print("yes")
                     self.state = "butt"
+                
 	    
-            button_a.draw()
-            button_b.draw()
-            button_c.draw()
-            button_d.draw()
+            player1_a.draw()
+            player1_b.draw()
+            player1_c.draw()
+            player1_d.draw()
+
+            player2_a.draw()
+            player2_b.draw()
+            player2_c.draw()
+            player2_d.draw()
+
+            #if button_a.pressed:
+            #    print("a was pressed")
+            #    answers
+            
             
             pygame.display.update()
 
@@ -422,6 +440,20 @@ class gamestates():
         #box_1 = pygame.Rect((100,300),(200,100))
         """
 
+        #answer a
+        #box_a = pygame.draw.rect(screen, orange, (130,213,130,45))
+        #screen.blit(option_a, (140, 223))
+
+        #answer b
+        #(x,y,width,height)
+        #box_b = pygame.draw.rect(screen, orange, (330,213,130,45))
+        #screen.blit(option_b, (340, 223))
+
+        #box_c = pygame.draw.rect(screen, orange, (130,283,130,45))
+        #screen.blit(option_c, (140, 293))
+
+        #box_d = pygame.draw.rect(screen, orange, (330,283,130,45))
+        #screen.blit(option_d, (340, 293))
         input_1 = pygame.draw.rect(screen, black, (170,403,130,45))
         user_answer = user_text[1:]
         text_surface = carbontype.render(user_answer, False, orange)
@@ -504,7 +536,7 @@ black = (0,0,0)
 pygame.init()
 clock = pygame.time.Clock()
 
-gui_font = pygame.font.Font("carbontype.ttf", 20)
+gui_font = pygame.font.Font("carbontype.ttf", 23)
 #fonts loading
 main1942 = pygame.font.Font("1942.ttf", 27, bold = True)
 carbontype = pygame.font.Font("carbontype.ttf", 20)
