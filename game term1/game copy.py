@@ -4,6 +4,8 @@ from pygame import Surface, display
 from pygame import surface
 from pygame.constants import K_BACKSPACE, MOUSEBUTTONDOWN
 import pygame.freetype
+import sys
+#from button import Button
 
 #put arrow for forward 
 #opengameart.org
@@ -13,6 +15,7 @@ import pygame.freetype
 #clearcode pygame gamestate code 
 #clearcode pygame timer code
 
+#answer dict
 taskandtime = {
     0 : "wake up - " + str(random.randint(6,7)) + ":" + str(random.randint(0, 3)) + str(random.randint(0, 9)) + " AM",
     1 : "breakfast - 7:" + str(random.randint(45, 59)) + " AM",
@@ -27,8 +30,63 @@ taskandtime = {
     7 : "cleaning - 6:" + (("0" + str(random.randint(0,9))) or (str(random.randint(10,15)))) + " PM",
     8 : "dinner - 7:" + str(random.randint(16, 30)) + " PM",
     9 : "lights out - " + ("8:" + str(random.randint(30,59))) or ("9:" + (("0" + str(random.randint(0,9))) or (str(random.randint(10,30))))) + " PM"
-
 }
+
+#wrong ans for wake up time
+falses_0 = {
+            "option_b" : str(random.randint(6,7)) + ":" + str(random.randint(0, 3)) + str(random.randint(0, 9)) + " AM",
+            "option_c" : "7" + ":" + str(random.randint(0, 3)) + str(random.randint(0, 9)) + " AM",
+            "option_d" : "6" + ":" + str(random.randint(0, 5)) + str(random.randint(0, 9)) + " AM"
+}
+
+class Button:
+	def __init__(self,text,width,height,pos,elevation):
+		#Core attributes 
+		self.pressed = False
+		self.elevation = elevation
+		self.dynamic_elecation = elevation
+		self.original_y_pos = pos[1]
+
+		# top rectangle 
+		self.top_rect = pygame.Rect(pos,(width,height))
+		self.top_color = chrome
+
+		# bottom rectangle 
+		self.bottom_rect = pygame.Rect(pos,(width,height))
+		self.bottom_color = chrome
+		#text
+		self.text_surf = gui_font.render(text,True,black)
+		self.text_rect = self.text_surf.get_rect(center = self.top_rect.center)
+
+	def draw(self):
+		# elevation logic 
+		self.top_rect.y = self.original_y_pos - self.dynamic_elecation
+		self.text_rect.center = self.top_rect.center 
+
+		self.bottom_rect.midtop = self.top_rect.midtop
+		self.bottom_rect.height = self.top_rect.height + self.dynamic_elecation
+
+		pygame.draw.rect(screen,self.bottom_color, self.bottom_rect,border_radius = 12)
+		pygame.draw.rect(screen,self.top_color, self.top_rect,border_radius = 12)
+		screen.blit(self.text_surf, self.text_rect)
+		self.check_click()
+
+	def check_click(self):
+		mouse_pos = pygame.mouse.get_pos()
+		if self.top_rect.collidepoint(mouse_pos):
+			self.top_color = vermillion
+			if pygame.mouse.get_pressed()[0]:
+				self.dynamic_elecation = 0
+				self.pressed = True
+			else:
+				self.dynamic_elecation = self.elevation
+				if self.pressed == True:
+					print('click')
+					self.pressed = False
+		else:
+			self.dynamic_elecation = self.elevation
+			self.top_color = lime        
+
 
 #clearcode pygame gamestate code
 class gamestates():
@@ -56,7 +114,12 @@ class gamestates():
         
         play = carbontype.render("Play", False, (255, 255, 255))
         screen.blit(play, (338, 277))
-
+        
+        
+        
+        if pygame.key.get_pressed()[pygame.K_RIGHT]:
+            self.state = "frame1"
+        """
         for event in pygame.event.get():
             #if play button clicked on start window
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -64,8 +127,8 @@ class gamestates():
                 
                 #if mouse lies within 'play' box and is clicked:
                 if ((326 <= x <= 400) and (271 <= y <= 309)):
-                    self.state = "frame1"
-
+                    self.state = "frame1" 
+        """ 
         pygame.display.update()
 
     def frame1(self):
@@ -232,7 +295,7 @@ class gamestates():
             self.state = "stop"
         
     def stop(self):
-
+        
         main1942 = pygame.font.Font("1942.ttf", 40, bold = True)
         carbontype = pygame.font.Font("carbontype.ttf", 30)
 
@@ -265,6 +328,7 @@ class gamestates():
 
         if pygame.key.get_pressed()[pygame.K_y]:
             self.state = "q1"
+           
         elif pygame.key.get_pressed()[pygame.K_n]:
             self.state = "bye"
             
@@ -275,19 +339,75 @@ class gamestates():
         pygame.display.update()
 
     def q1(self):
-        screen.fill(white)
+        
+        carbontype = pygame.font.Font("carbontype.ttf", 23)
         x = pygame.transform.scale(bricks, (650,500))
         screen.blit(x, (0,0))
-
-        color = 232, 147, 98
-        active_color = False
-
-        input = ""
-
-        #question
-
-        box_1 = pygame.Rect((100,300),(200,100))
+        scr2 = pygame.draw.rect(screen, white, (0,370,width,230))
         
+        #question
+        q1 = carbontype.render("When did you wake up?", False, white)
+        screen.blit(q1, (100, 150))
+
+        answer = taskandtime[0]
+        answer = answer[10:]
+        #print(answer)
+        #print("type: " + str(type(answer)))
+        
+        #rendering options and their boxes onto screen
+        option_a = carbontype.render(answer, False, white)
+        option_b = carbontype.render(falses_0.get("option_b"), False, white)
+        option_c = carbontype.render(falses_0.get("option_c"), False, white)
+        option_d = carbontype.render(falses_0.get("option_d"), False, white)
+
+        
+        #answer a
+        box_a = pygame.draw.rect(screen, orange, (130,213,130,45))
+        screen.blit(option_a, (140, 223))
+
+        #answer b
+        box_b = pygame.draw.rect(screen, orange, (330,213,130,45))
+        screen.blit(option_b, (340, 223))
+
+        box_c = pygame.draw.rect(screen, orange, (130,283,130,45))
+        screen.blit(option_c, (140, 293))
+
+        box_d = pygame.draw.rect(screen, orange, (330,283,130,45))
+        screen.blit(option_d, (340, 293))
+
+        
+        inmate_1 = carbontype.render("Inmate 1: ", False, black)
+        screen.blit(inmate_1, (20, 410))
+        input_1 = pygame.draw.rect(screen, black, (170,403,130,45))
+        user_answer = user_text[1:]
+        text_surface = carbontype.render(user_answer, False, orange)
+        screen.blit(text_surface, (190, 410))
+        
+
+        inmate_2 = carbontype.render("Inmate 2: ", False, black)
+        screen.blit(inmate_2, (350, 410))
+        input_2 = pygame.draw.rect(screen, black, (500,403,130,45))
+
+        #if pygame.key.get_pressed()[pygame.K_KP_ENTER]:
+         #   act = False
+        if pygame.key.get_pressed()[pygame.K_RIGHT]:
+            self.state = "butt"
+        pygame.display.update()
+
+        """
+        if pygame.key.get_pressed()[pygame.K_a]:
+            pygame.draw.rect(screen, red, (130,213,130,45), 3)           
+        elif pygame.key.get_pressed()[pygame.K_b]:
+            pygame.draw.rect(screen, red, (330,213,130,45), 3)
+        elif pygame.key.get_pressed()[pygame.K_c]:
+            pygame.draw.rect(screen, red, (130,313,130,45), 3)
+        elif pygame.key.get_pressed()[pygame.K_d]:
+            pygame.draw.rect(screen, red, (330,313,130,45), 3)
+
+        """
+
+        #box_1 = pygame.Rect((100,300),(200,100))
+        """
         for game_event in pygame.event.get():
             if game_event.type == pygame.MOUSEBUTTONDOWN:
 
@@ -312,6 +432,22 @@ class gamestates():
         #box_text = carbontype.render(input, True, white)
         #screen.blit(box_text, (box_1.x + 5, box_1.y + 5))
         pygame.display.flip()
+        """
+
+    def butt(self):
+        screen.fill(black)
+        #buttscreen = True
+        button_1 = Button('Click me',200,40,(20,250),3)
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+
+	    #screen.fill('#DCDDD8')
+            button_1.draw()
+
+            pygame.display.update()
 
     def state_manager(self):
         if self.state == "menu":
@@ -336,12 +472,21 @@ class gamestates():
             self.bye()
         if self.state == "q1":
             self.q1()
-
+        if self.state == "butt":
+            self.butt()
+            buttscreen = True
+                           
+lime = (253,230,126)
+vermillion = (230,53,37)
+chrome = 209, 150, 0
+black = (0,0,0)
+buttscreen = False
 
 #initializes all modules
 pygame.init()
 clock = pygame.time.Clock()
 
+gui_font = pygame.font.Font("carbontype.ttf", 20)
 #fonts loading
 main1942 = pygame.font.Font("1942.ttf", 27, bold = True)
 carbontype = pygame.font.Font("carbontype.ttf", 20)
@@ -350,6 +495,9 @@ arrows = pygame.font.Font("Arrows ADF.ttf", 20)
 #colors
 white = (255, 255, 255)
 black = (0,0,0)
+yellow = ((255,255,0))
+red = ((255,0,0))
+orange = ((255,100,10))
 
 #images loading
 bricks = pygame.image.load('brick.jpg')
@@ -364,8 +512,15 @@ height = 500
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Remember the Time...")
 
+#global user_text
+user_text = ""
+
+act = False
+
+
 window = True
 while window:
+
 
     #looping through all events happening in the game
     for event in pygame.event.get():
@@ -374,12 +529,32 @@ while window:
         if event.type == pygame.QUIT:
             #game stops running
             window = False
+            #pygame.quit()
+            #sys.exit()
+        
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_y:
+                act = True
+            elif event.key == pygame.K_KP_ENTER:
+                act = False
+     
+        if act == True:
+            if event.type == pygame.KEYDOWN:
+
+                if event.key == pygame.K_BACKSPACE:
+                    user_text = user_text[:-1]
+                
+                else:
+                    user_text += event.unicode
+
+    
 
     current_time = pygame.time.get_ticks()
 
-
     gamestate.state_manager()
-    #clock.tick(60)        
+           
+    """ """
+    clock.tick(60)        
      
 
 """
