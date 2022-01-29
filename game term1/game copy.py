@@ -77,7 +77,7 @@ class Button:
 			else:
 				self.dynamic_elecation = self.elevation
 				if self.pressed == True:
-					print('click')
+					#print('click')
 					self.pressed = False
 		else:
 			self.dynamic_elecation = self.elevation
@@ -101,6 +101,17 @@ class gamestates():
         title = main1942.render("Remember the Time...", True, (195, 0, 0))
         screen.blit(title, (325, 230))
 
+
+        txt = carbontype.render("Press    to play", False, black)
+        screen.blit(txt, (328, 267))
+        arrows = pygame.font.Font("Arrows ADF.ttf", 45)
+        rightkey = arrows.render(" k", False, black)
+        screen.blit(rightkey, (408, 259))
+        
+        if pygame.key.get_pressed()[pygame.K_RIGHT]:
+            self.state = "frame1"
+
+        """
         #brick image bg for options presented below title
         button = pygame.transform.scale(bricks, (74,38))
         rect2 = button.get_rect()
@@ -109,12 +120,7 @@ class gamestates():
         
         play = carbontype.render("Play", False, (255, 255, 255))
         screen.blit(play, (338, 277))
-        
-        
-        
-        if pygame.key.get_pressed()[pygame.K_RIGHT]:
-            self.state = "frame1"
-        """
+
         for event in pygame.event.get():
             #if play button clicked on start window
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -140,19 +146,15 @@ class gamestates():
         screen.blit(f1txt3, (184, 380))
     
         f1txt4 = carbontype.render("Press", False, white)
-        screen.blit(f1txt4, (510, 457))
-        arrows = pygame.font.Font("Arrows ADF.ttf", 40)
+        screen.blit(f1txt4, (500, 457))
         two = carbontype.render("2", False, white)
-        screen.blit(two, (590, 450))
+        screen.blit(two, (588, 457))
+        rightkey = arrows.render("k", False, white)
+        screen.blit(rightkey, (610, 450))
         pygame.display.update()
 
         if pygame.key.get_pressed()[pygame.K_2]:
             self.state = "frame2"
-        
-        """    if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RIGHT:
-                    if event.type == pygame.KEYUP:
-                        self.state = "frame2" """
 
     def frame2(self):
 
@@ -161,9 +163,11 @@ class gamestates():
         screen.blit(f2txt1, (170, 250))
 
         f2txt2 = carbontype.render("Press", False, white)
-        screen.blit(f2txt2, (510, 457))
+        screen.blit(f2txt2, (500, 457))
         f2txt3 = carbontype.render("3", False, white)
-        screen.blit(f2txt3, (592,470))
+        screen.blit(f2txt3, (586,458.5))
+        rightkey = arrows.render("k", False, white)
+        screen.blit(rightkey, (610, 450))
 
         pygame.display.update()
         
@@ -174,17 +178,19 @@ class gamestates():
 
         screen.fill(black)
         f3txt1 = carbontype.render("But these goons,", False, white)
-        screen.blit(f3txt1, (180, 130))
+        screen.blit(f3txt1, (210, 130))
         f3txt2 = carbontype.render("they still had wounds to heal.", False, white)
         screen.blit(f3txt2, (120, 170))
         f3txt4 = carbontype.render("Press", False, white)
-        screen.blit(f3txt4, (510, 457))
+        screen.blit(f3txt4, (500, 457))
         f3txt5 = carbontype.render("4", False, white)
-        screen.blit(f3txt5, (592,470))
+        screen.blit(f3txt5, (586,458.5))
+        rightkey = arrows.render("k", False, white)
+        screen.blit(rightkey, (610, 450))
         pygame.display.update()
         
         f3txt3 = carbontype.render("They were still seeking retribution...", False, white)
-        screen.blit(f3txt3, (96, 210))
+        screen.blit(f3txt3, (65, 210))
         pygame.display.update()
 
 
@@ -195,23 +201,25 @@ class gamestates():
 
         screen.fill(black)
         f4txt1 = carbontype.render("For once, they finally found their nemesis.", False, white)
-        screen.blit(f4txt1, (10, 150))
+        screen.blit(f4txt1, (10, 130))
         f4txt2 = carbontype.render("And murdered him", False, white)
-        screen.blit(f4txt2, (10, 190))
+        screen.blit(f4txt2, (10, 170))
         f4txt3 = carbontype.render("within the prison's territories. Alas!", False, white)
-        screen.blit(f4txt3, (10, 230))
+        screen.blit(f4txt3, (10, 210))
 
         f4txt4 = carbontype.render("Yet danger crept up soon.", False, white)
-        screen.blit(f4txt4, (10, 330))
+        screen.blit(f4txt4, (10, 300))
         f4txt5 = carbontype.render("The police intervened.", False, white)
-        screen.blit(f4txt5, (10, 370))
+        screen.blit(f4txt5, (10, 340))
         f4txt6 = carbontype.render("They are now on the hunt for the murderers.", False, white)
-        screen.blit(f4txt6, (10, 410))
+        screen.blit(f4txt6, (10, 380))
 
         f4txt7 = carbontype.render("Press", False, white)
-        screen.blit(f4txt7, (510, 457))
+        screen.blit(f4txt7, (500, 457))
         f4txt8 = carbontype.render("5", False, white)
-        screen.blit(f4txt8, (592,470))
+        screen.blit(f4txt8, (586,459))
+        rightkey = arrows.render("k", False, white)
+        screen.blit(rightkey, (610, 450))
         
         pygame.display.update()
 
@@ -240,9 +248,11 @@ class gamestates():
         screen.blit(f5txt8, (10, 390))
 
         f5txt9 = carbontype.render("Press", False, white)
-        screen.blit(f5txt9, (510, 457))
+        screen.blit(f5txt9, (500, 457))
         f5txt = carbontype.render("6", False, white)
-        screen.blit(f5txt, (592,470))
+        screen.blit(f5txt, (586,459))
+        rightkey = arrows.render("k", False, white)
+        screen.blit(rightkey, (610, 450))
         
         pygame.display.update()
 
@@ -258,16 +268,38 @@ class gamestates():
         #rect2.center = (363, 290)
         screen.blit(x, (0,0))
 
-        screen.blit(prisoner, (20, 170))
-        screen.blit(prisoner2, (360, 170))
-        main1942 = pygame.font.Font("1942.ttf", 32, bold = True)
-        txt = main1942.render("Inmate 1", False, white)
-        screen.blit(txt, (60, 370))
-        txt = main1942.render("Inmate 2", False, white)
-        screen.blit(txt, (410, 370))
+        screen.blit(prisoner1, (60, 110))
+        screen.blit(prisoner2, (370, 110))
+
+        main1942 = pygame.font.Font("1942.ttf", 32)
+        title = main1942.render("Now YOU will be the inmates.", False, white)
+        screen.blit(title, (40, 60))
+        txt1 = main1942.render("Inmate 1", False, white)
+        screen.blit(txt1, (70, 280))
+        txt2 = main1942.render("Inmate 2", False, white)
+        screen.blit(txt2, (410, 280))
+
+        txt3 = carbontype.render("A fake schedule of your prison routine will", False, white)
+        screen.blit(txt3, (10, 330))
+        txt3 = carbontype.render("be shown. It covers up the timing of the", False, white)
+        screen.blit(txt3, (10, 360))
+        txt3 = carbontype.render("murder. Memorize the timestamps to avoid", False, white)
+        screen.blit(txt3, (10, 390))
+
+        txt3 = carbontype.render("getting caught! Ready?", False, white)
+        screen.blit(txt3, (10, 420))
+        txt3 = carbontype.render("You have 11 seconds.", False, white)
+        screen.blit(txt3, (10, 455))
+
+        f5txt9 = carbontype.render("(GO!) Press", False, white)
+        screen.blit(f5txt9, (432, 455))
+        
+        rightkey = arrows.render("k", False, white)
+        screen.blit(rightkey, (600, 445))
+
         pygame.display.update()
 
-        if pygame.key.get_pressed()[pygame.K_7]:
+        if pygame.key.get_pressed()[pygame.K_RIGHT]:
             self.state = "times"
             timelol = pygame.time.get_ticks()
 
@@ -282,11 +314,14 @@ class gamestates():
             
             x += 40
         countdown = main1942.render(str((current_time - timelol)/1000), True, white)
-        screen.blit(countdown, (550,450))
+        screen.blit(countdown, (20,455))
+
+        txt = carbontype.render("seconds passed", False, white)
+        screen.blit(txt, (140, 460))
         pygame.display.update()
 
         global stoptime
-        if ((current_time - timelol)/1000) >= 2.500:
+        if ((current_time - timelol)/1000) >= 11.500:
             stoptime = pygame.time.get_ticks()
             self.state = "stop"
         
@@ -332,7 +367,7 @@ class gamestates():
     def bye(self):
         screen.fill(black)
         txt = carbontype.render("byebye.", True, white)
-        screen.blit(txt, (300, 250))
+        screen.blit(txt, (275, 250))
         pygame.display.update()
 
     def q1(self):
@@ -344,16 +379,20 @@ class gamestates():
         
         #question
         q1 = carbontype.render("When did you wake up?", False, white)
-        screen.blit(q1, (150, 80))
+        screen.blit(q1, (150, 70))
 
         answer = taskandtime[0]
         answer = answer[10:] 
         option_b = str(random.randint(6,7)) + ":" + str(random.randint(0, 3)) + str(random.randint(0, 9)) + " AM"
         option_c = "7" + ":" + str(random.randint(0, 3)) + str(random.randint(0, 9)) + " AM"
         option_d = "6" + ":" + str(random.randint(0, 5)) + str(random.randint(0, 9)) + " AM"
-
-        print(option_b, option_c, option_d)
         
+        carbontype = pygame.font.Font("carbontype.ttf", 17)
+        warning = carbontype.render("Click once on the button for your answer.", False, black)
+        screen.blit(warning, (15, 460))
+
+        carbontype = pygame.font.Font("carbontype.ttf", 23)
+
         #simple display of all options
         pygame.draw.rect(screen, orange, (160,123,130,45))
         a = carbontype.render(answer, False, white)
@@ -446,15 +485,18 @@ class gamestates():
                 answers[0][1] = False
             
             if answers[0][0] != "" and answers[0][1] != "":
-                carbontype = pygame.font.Font("carbontype.ttf", 21)
-                locked = carbontype.render("Your answers are locked!", False, red)
-                screen.blit(locked, (145, 440))
+                carbontype = pygame.font.Font("carbontype.ttf", 19)
+                locked = carbontype.render("Answers", False, red)
+                screen.blit(locked, (280, 340))
+                locked2 = carbontype.render("are locked.", False, red)
+                screen.blit(locked2, (255, 365))
 
+                carbontype = pygame.font.Font("carbontype.ttf", 17)
                 next = carbontype.render("Press", False, black)
-                screen.blit(next, (510, 455))
+                screen.blit(next, (550, 460))
                 arrows = pygame.font.Font("Arrows ADF.ttf", 40)
                 rightkey = arrows.render("k", False, black)
-                screen.blit(rightkey, (590, 450))
+                screen.blit(rightkey, (615, 452))
 
             
             pygame.display.update()
@@ -524,7 +566,7 @@ class gamestates():
         #"rollcall for work - 9:" + str(random.randint(45, 50)) + " AM"
         carbontype = pygame.font.Font("carbontype.ttf", 23)
         
-        scr2 = pygame.draw.rect(screen, white, (0,260,width,530))
+        scr2 = pygame.draw.rect(screen, white, (0,250,width,530))
         
         #question
         q1 = carbontype.render("At what time did you go to work?", False, white)
@@ -586,7 +628,7 @@ class gamestates():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-                if pygame.key.get_pressed()[pygame.K_3]:
+                if pygame.key.get_pressed()[pygame.K_UP]:
                     x = False
                     self.state = "q3"
 	    
@@ -627,15 +669,18 @@ class gamestates():
                 answers[1][1] = False
             
             if answers[1][0] != "" and answers[1][1] != "":
-                carbontype = pygame.font.Font("carbontype.ttf", 21)
-                locked = carbontype.render("Your answers are locked!", False, red)
-                screen.blit(locked, (145, 440))
+                carbontype = pygame.font.Font("carbontype.ttf", 19)
+                locked = carbontype.render("Answers", False, red)
+                screen.blit(locked, (280, 340))
+                locked2 = carbontype.render("are locked.", False, red)
+                screen.blit(locked2, (255, 365))
 
+                carbontype = pygame.font.Font("carbontype.ttf", 17)
                 next = carbontype.render("Press", False, black)
-                screen.blit(next, (510, 455))
+                screen.blit(next, (550, 460))
                 arrows = pygame.font.Font("Arrows ADF.ttf", 40)
-                rightkey = arrows.render("k", False, black)
-                screen.blit(rightkey, (590, 450))
+                rightkey = arrows.render("q", False, black)
+                screen.blit(rightkey, (615, 449))
             
             pygame.display.update()
 
@@ -646,7 +691,7 @@ class gamestates():
         
         carbontype = pygame.font.Font("carbontype.ttf", 23)
         
-        scr2 = pygame.draw.rect(screen, white, (0,260,width,530))
+        scr2 = pygame.draw.rect(screen, white, (0,250,width,530))
         
         #question
         q1 = carbontype.render("When did you attend phonecalls?", False, white)
@@ -752,15 +797,18 @@ class gamestates():
                 answers[2][1] = True
             
             if answers[2][0] != "" and answers[2][1] != "":
-                carbontype = pygame.font.Font("carbontype.ttf", 21)
-                locked = carbontype.render("Your answers are locked!", False, red)
-                screen.blit(locked, (145, 440))
+                carbontype = pygame.font.Font("carbontype.ttf", 19)
+                locked = carbontype.render("Answers", False, red)
+                screen.blit(locked, (280, 340))
+                locked2 = carbontype.render("are locked.", False, red)
+                screen.blit(locked2, (255, 365))
 
+                carbontype = pygame.font.Font("carbontype.ttf", 17)
                 next = carbontype.render("Press", False, black)
-                screen.blit(next, (510, 455))
+                screen.blit(next, (550, 460))
                 arrows = pygame.font.Font("Arrows ADF.ttf", 40)
                 rightkey = arrows.render("k", False, black)
-                screen.blit(rightkey, (590, 450))
+                screen.blit(rightkey, (615, 452))
             
             pygame.display.update()
 
@@ -947,7 +995,7 @@ gui_font = pygame.font.Font("carbontype.ttf", 23)
 #fonts loading
 main1942 = pygame.font.Font("1942.ttf", 27, bold = True)
 carbontype = pygame.font.Font("carbontype.ttf", 20)
-arrows = pygame.font.Font("Arrows ADF.ttf", 20)
+arrows = pygame.font.Font("Arrows ADF.ttf", 40)
 
 #colors
 white = (255, 255, 255)
@@ -958,8 +1006,11 @@ orange = ((255,100,10))
 
 #images loading
 bricks = pygame.image.load('brick.jpg')
-prisoner = pygame.image.load('prisoner.png')
-prisoner2 = pygame.image.load('prisoner2.jpg')
+unscaled1 = pygame.image.load('inmate1.png')
+prisoner1 = pygame.transform.scale(unscaled1, (212,181.71))
+
+unscaled2 = pygame.image.load("inmate2.png")
+prisoner2 = pygame.transform.scale(unscaled2, (212,181.71))
 
 gamestate = gamestates()
 
