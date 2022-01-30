@@ -21,7 +21,7 @@ taskandtime = {
     6 : "exercise - 4:00 PM",
     7 : "cleaning - 6:" + (("0" + str(random.randint(0,9))) or (str(random.randint(10,15)))) + " PM",
     8 : "dinner - 7:" + str(random.randint(16, 30)) + " PM",
-    9 : "lights out - " + ("8:" + str(random.randint(30,59))) or ("9:" + (("0" + str(random.randint(0,9))) or (str(random.randint(10,30))))) + " PM"
+    9 : "lights out - " + (("8:" + str(random.randint(30,59))) or ("9:" + (("0" + str(random.randint(0,9))) or (str(random.randint(10,30)))))) + " PM"
 }
 
 #list storing final answers of players
