@@ -12,7 +12,7 @@ taskandtime = {
     0 : "wake up - " + str(random.randint(6,7)) + ":" + str(random.randint(0, 3)) + str(random.randint(0, 9)) + " AM",
     1 : "breakfast - 7:" + str(random.randint(45, 59)) + " AM",
     2 : "rollcall for work - 9:" + str(random.randint(45, 50)) + " AM",
-    3 : "escorting - 9:" + str(random.randint(50,59)) or "10:" + str(random.randint(0, 1) + str(random.randint(0, 5))) + " AM",
+    3 : "escorting - 9:" + str(random.randint(50,59)) + " AM",
     4 : "lunch - 1:" + str(random.randint(30, 45)) + " PM",
     #"walkbyward" : "2:" + str(random.randint(15, 30)) + " PM",
     5 : "phonecalls - 2:" + str(random.randint(35, 45)) + " PM",
@@ -21,7 +21,7 @@ taskandtime = {
     6 : "exercise - 4:00 PM",
     7 : "cleaning - 6:" + (("0" + str(random.randint(0,9))) or (str(random.randint(10,15)))) + " PM",
     8 : "dinner - 7:" + str(random.randint(16, 30)) + " PM",
-    9 : "lights out - " + (("8:" + str(random.randint(30,59))) or ("9:" + (("0" + str(random.randint(0,9))) or (str(random.randint(10,30)))))) + " PM"
+    9 : "lights out - 8:" + (str(random.randint(30,59))) + " PM",
 }
 
 #list storing final answers of players
@@ -837,7 +837,7 @@ class gamestates():
 
     def endgame(self):
 
-        """ """
+        
         #if one player wins
         if winner != 0:
 
