@@ -1,13 +1,11 @@
 SUMMARY
-Pre-Requisite: You must have pygame and pip installed.
+This is an executable version of the game. Just run "Remthetime.exe" under the folder "exe.macosx-10.9-universal2-3.10" to start playing!
  
-General Instructions: This is a 2-player game (no computer player). Make sure you have a working keyboard and mouse/touchpad.  The main game file is titled “Game_Remthetime”. Turn up your volume just enough - not too loud not to low - there’s music in the game!
+General Instructions: This is a 2-player game (no computer opponent). Make sure you have a working keyboard and mouse/touchpad. Turn up your volume just enough - there’s music in the game!
 
-This game is called “Remember the Time”. Two players are two inmates in a prison. They recently committed a murder in secret within the prison. But the police found out, and are now conducting trial sessions to find out the perpetrators. Each inmate/murderer tries not to get caught and just save themself.
+This game is called “Remember the Time”. Two players act as two inmates in a prison. They recently committed a murder in secret within the prison. But the police found out, and are now conducting trial sessions to find out the perpetrators. Each inmate/murderer tries not to get caught and just save themself.
 
 In order to cover up the exact timing of the murder and the events taking place around it, a fake schedule is devised. A series of false timestamps detailing what you did and at what time will be shown. They will differ from the actual times you did those tasks, for example:
-
-(Prison routine associated things)
 
 When were you escorted for work?
 When did you clean the communal showers?
@@ -39,7 +37,7 @@ I used their code but had to experiment and mold their Button class a lot to fit
 
 Graphically, the game is sort of old fashioned and rudimentary in style. I thought it blended with the game’s rough themes of prison cells, murders, and gothic text, etc. Consequently, I used a typewriter font (like it is used in official documents in governments, law). Pixel art is very popular in retro games and looks very exciting to the eye, but I knew this game was adopting a different approach in that sense.
 
-Hopefully you’ll like the game! Have fun!
+Hopefully you’ll like the game - have fun!
 
 
 CREDITS
@@ -50,4 +48,4 @@ Using a timer in pygame: https://www.youtube.com/watch?v=YOCt8nsQqEo
 
 Creating a button in pygame: https://www.youtube.com/watch?v=8SzTzvrWaAA
 
-I used this song for my background music: https://www.youtube.com/watch?v=s0266OK1Haw
+Background music: https://www.youtube.com/watch?v=s0266OK1Haw
