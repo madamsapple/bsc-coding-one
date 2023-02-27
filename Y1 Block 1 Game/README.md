@@ -1,4 +1,5 @@
 SUMMARY
+
 This is an executable version of the game. Just run "Remthetime.exe" under the folder "exe.macosx-10.9-universal2-3.10" to start playing!
  
 General Instructions: This is a 2-player game (no computer opponent). Make sure you have a working keyboard and mouse/touchpad. Turn up your volume just enough - there’s music in the game!
