@@ -1,1 +1,1 @@
-Please switch to the branch **'executable'** in the repo to download the executable version of the game and start playing immediately!
+Please switch to the branch **'executable'** in the repo to download the executable version of the game!
